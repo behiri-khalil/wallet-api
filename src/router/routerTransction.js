@@ -4,7 +4,7 @@ import {createTransaction, deleteTransaction, getSammuryById, getTransactionByUs
 
 const router = express.Router();
 
-router.post("/",getTransactionByUserId);
+router.post("/", createTransaction);
 
 router.get('/:user_id', createTransaction);
 
