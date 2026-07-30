@@ -42,27 +42,36 @@ export async function getTransactionByUserId(req,res) {
          }
 }
 
-export async function deleteTransaction(req,res) {
+export async function deleteTransaction(req, res) {
     try {
-           const {id} = req.params;
-           
-           if(isNaN(parseInt(id))){
-             return res.send(400).json({message:"Invalid transction Id"});
-           }
-    
-           const result = await sql`
-             DELETE FROM transactions WHERE id = ${id}
-             RETURNING *
-           `
-           if(result.length==0){
-             return res.status(404).json({message:"transaction not found"});
-           }
-           console.log(result);
-           res.status(400).json({message:"Transaction deleted is successfully"});
-       } catch (error) {
-           console.log("Error deleting the transaction :",error);
-           res.status(500).json({message:"Iternal server error"});
-       }
+        const { id } = req.params;
+
+        
+        if (isNaN(parseInt(id))) {
+            return res.status(400).json({ message: "Invalid transaction ID" });
+        }
+
+        
+        const result = await sql`
+            DELETE FROM transactions 
+            WHERE id = ${id}
+            RETURNING *
+        `;
+
+        
+        if (result.length === 0) {
+            return res.status(404).json({ message: "Transaction not found" });
+        }
+
+        console.log("Deleted item:", result);
+
+        
+        return res.status(200).json({ message: "Transaction deleted successfully" });
+
+    } catch (error) {
+        console.error("Error deleting the transaction:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
 }
 
 export async function getSammuryById(req,res) {
