@@ -58,7 +58,7 @@ export async function deleteTransaction(req,res) {
              return res.status(404).json({message:"transaction not found"});
            }
            console.log(result);
-           res.status(404).json({message:"Transaction deleted is successfully"});
+           res.status(400).json({message:"Transaction deleted is successfully"});
        } catch (error) {
            console.log("Error deleting the transaction :",error);
            res.status(500).json({message:"Iternal server error"});
